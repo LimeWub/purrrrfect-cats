@@ -66,9 +66,12 @@
   --color-background: #ffffff;
   --color-foreground: var(--color-tonal-950);
   --color-muted: var(--color-tonal-100);
+  --color-muted-foreground: var(--color-tonal-600);
   --color-border: var(--color-tonal-300);
   --color-destructive: var(--color-error);
   --color-ring: var(--color-primary-500);
+  --color-card: #ffffff;
+  --color-card-foreground: var(--color-tonal-950);
 
   /* Font Families */
   --font-heading-cursive: 'Playwrite Australia Tasmania', cursive;

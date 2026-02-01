@@ -2,11 +2,12 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { Listing } from './views/listing/Listing'
 import { Upload } from './views/upload/Upload'  
 import './App.css'
-import { Toaster, toast } from 'sonner'
+import { TooltipProvider } from './components'
 
 function App() {
   return (
     <BrowserRouter>
+      <TooltipProvider>
       <Toaster richColors position="top-right" />
       {/* <button onClick={() => toast.error('My first toast', { action: {
         label: 'Undo',
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<Listing />} />
         <Route path="/upload" element={<Upload />} />
       </Routes>
+      </TooltipProvider>
     </BrowserRouter>
   )
 }
