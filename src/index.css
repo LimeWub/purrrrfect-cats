@@ -30,12 +30,12 @@
   --color-tonal-900: #3f3e3a;
   --color-tonal-950: #121110;
 
-  --color-primary-50: #E9D9DC;
-  --color-primary-100: #d8c4c9;
-  --color-primary-200: #c7afb6;
-  --color-primary-300: #b699a3;
-  --color-primary-400: #a58390;
-  --color-primary-500: #985867;
+  --color-primary-50: #f3e4e4;
+  --color-primary-100: #efd7d7;
+  --color-primary-200: #d9b8b8;
+  --color-primary-300: #cfa6ac;
+  --color-primary-400: #bb848f;
+  --color-primary-500: #a95970;
   --color-primary-600: #804a57;
   --color-primary-700: #693B46;
   --color-primary-800: #522d35;
@@ -59,9 +59,9 @@
   --color-info-dark: #1976d2;
 
   /* Font Families */
-  --font-family-heading-cursive: 'Playwrite Australia Tasmania', cursive;
-  --font-family-heading-chunky: 'Titan One', system-ui, sans-serif;
-  --font-family-body: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-heading-cursive: 'Playwrite Australia Tasmania', cursive;
+  --font-heading-chunky: 'Titan One', system-ui, sans-serif;
+  --font-body: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 body {
