@@ -1,6 +1,52 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-tonal-50: #E9E6D9;
+  --color-tonal-100: #d8d4c6;
+  --color-tonal-200: #c1beb3;
+  --color-tonal-300: #aba9a1;
+  --color-tonal-400: #9a988f;
+  --color-tonal-500: #85837d;
+  --color-tonal-600: #74736c;
+  --color-tonal-700: #63625b;
+  --color-tonal-800: #51504b;
+  --color-tonal-900: #3f3e3a;
+  --color-tonal-950: #121110;
+
+  --color-primary-50: #E9D9DC;
+  --color-primary-100: #d8c4c9;
+  --color-primary-200: #c7afb6;
+  --color-primary-300: #b699a3;
+  --color-primary-400: #a58390;
+  --color-primary-500: #985867;
+  --color-primary-600: #804a57;
+  --color-primary-700: #693B46;
+  --color-primary-800: #522d35;
+  --color-primary-900: #3b1f24;
+  --color-primary-950: #1c0c10;
+
+  --color-success: #4caf50;
+  --color-success-light: #e8f5e9;
+  --color-success-dark: #388e3c;
+
+  --color-error: #f44336;
+  --color-error-light: #ffebee;
+  --color-error-dark: #d32f2f;
+
+  --color-warning: #ff9800;
+  --color-warning-light: #fff3e0;
+  --color-warning-dark: #f57c00;
+
+  --color-info: #2196f3;
+  --color-info-light: #e3f2fd;
+  --color-info-dark: #1976d2;
+
+  /* Font Families */
+  --font-family-heading-cursive: 'Playwrite Australia Tasmania', cursive;
+  --font-family-heading-chunky: 'Titan One', system-ui, sans-serif;
+  --font-family-body: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
 
 body {
   margin: 0;
