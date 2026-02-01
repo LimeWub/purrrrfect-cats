@@ -3,13 +3,14 @@ import { toast } from 'sonner'
 import { addFavourite } from '../api/favouriteMutations'
 import { FAVOURITES_QUERY_KEY } from '../api/favouritesQueryOptions'
 import type { TFavourite } from '../types/favourite'
-const API_USER = import.meta.env.VITE_CAT_API_USER ?? ''
+import { useUser } from '../context/UserContext'
 
 export function useFavourite(): UseMutationResult<Awaited<ReturnType<typeof addFavourite>>, Error, string> {
   const queryClient = useQueryClient()
+  const { userName } = useUser()
   
   const mutation = useMutation({
-    mutationFn: addFavourite,
+    mutationFn: (image_id: string) => addFavourite(image_id, userName),
     onMutate: async (image_id) => {
       // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: FAVOURITES_QUERY_KEY })
@@ -23,7 +24,7 @@ export function useFavourite(): UseMutationResult<Awaited<ReturnType<typeof addF
         const tempFavourite: TFavourite = {
           id: Date.now(), // Temporary ID
           image_id,
-          sub_id: API_USER,
+          sub_id: userName,
           created_at: new Date().toISOString(),
           image: { id: image_id, url: '', mime_type: 'image/jpeg' }, // Will be populated by server
         }
