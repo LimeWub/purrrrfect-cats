@@ -1,11 +1,13 @@
 import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { voteCat } from '../api/voteMutations'
 import { VOTES_QUERY_KEY } from '../api/votesQueryOptions'
 import type { TVote, TVotePayload } from '../types/vote'
 
 export function useVote(): UseMutationResult<Awaited<ReturnType<typeof voteCat>>, Error, TVotePayload> {
   const queryClient = useQueryClient()
-  return useMutation({
+  
+  const mutation = useMutation({
     mutationFn: voteCat,
     onMutate: async (newVote) => {
       // Cancel outgoing refetches
@@ -31,15 +33,25 @@ export function useVote(): UseMutationResult<Awaited<ReturnType<typeof voteCat>>
 
       return { previousVotes }
     },
-    onError: (_err, _newVote, context) => {
+    onError: (err, newVote, context) => {
       // Rollback on error
       if (context?.previousVotes) {
         queryClient.setQueryData(VOTES_QUERY_KEY, context.previousVotes)
       }
+      toast.error(`Failed to vote: ${err.message}`, {
+        action: {
+          label: 'Retry',
+          onClick: () => {
+            mutation.mutate(newVote)
+          },
+        },
+      })
     },
     onSettled: () => {
       // Refetch to get the real vote data from server
       queryClient.invalidateQueries({ queryKey: VOTES_QUERY_KEY })
     },
   })
+  
+  return mutation
 }

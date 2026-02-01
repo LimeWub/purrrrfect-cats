@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { addFavourite } from '../api/favouriteMutations'
 import { FAVOURITES_QUERY_KEY } from '../api/favouritesQueryOptions'
 import type { TFavourite } from '../types/favourite'
@@ -6,7 +7,8 @@ const API_USER = import.meta.env.VITE_CAT_API_USER ?? ''
 
 export function useFavourite(): UseMutationResult<Awaited<ReturnType<typeof addFavourite>>, Error, string> {
   const queryClient = useQueryClient()
-  return useMutation({
+  
+  const mutation = useMutation({
     mutationFn: addFavourite,
     onMutate: async (image_id) => {
       // Cancel outgoing refetches
@@ -30,15 +32,25 @@ export function useFavourite(): UseMutationResult<Awaited<ReturnType<typeof addF
 
       return { previousFavourites }
     },
-    onError: (_err, _image_id, context) => {
+    onError: (err, image_id, context) => {
       // Rollback on error
       if (context?.previousFavourites) {
         queryClient.setQueryData(FAVOURITES_QUERY_KEY, context.previousFavourites)
       }
+      toast.error(`Failed to favourite: ${err.message}`, {
+        action: {
+          label: 'Retry',
+          onClick: () => {
+            mutation.mutate(image_id)
+          },
+        },
+      })
     },
     onSettled: () => {
       // Refetch to ensure consistency with server
       queryClient.invalidateQueries({ queryKey: FAVOURITES_QUERY_KEY })
     },
   })
+  
+  return mutation
 }
