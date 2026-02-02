@@ -31,11 +31,11 @@ export const FileInput = ({ className, onSuccess, ...props }: FileInputProps) =>
   const [validationError, setValidationError] = useState<string | null>(null)
   const uploadMutation = useUploadImage()
   const [isDragOver, setIsDragOver] = useState(false)
-  
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-    
+
     const error = validateFile(file)
     if (error) {
       setValidationError(error)
