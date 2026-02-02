@@ -8,7 +8,6 @@ import { LoadingSkeleton } from "../loading-skeleton"
 export const ListingFavourites = () => {
   const queryResult = useFavourites()
   const images = queryResult.data?.map(favourite => favourite.image) ?? []
-  const hasLoadedFirstPage = (queryResult.data?.length ?? 0) > 0
 
   if (queryResult.isLoading) {
     return <LoadingSkeleton />
@@ -18,7 +17,7 @@ export const ListingFavourites = () => {
     return <LoadingErrorState errorMessage={queryResult.error?.message} />
   }
 
-  if (hasLoadedFirstPage && images.length === 0) {
+  if (queryResult.isSuccess && images.length === 0) {
     return (
       <ErrorState>
         <ErrorStateTitle>No favourites yet!</ErrorStateTitle>
