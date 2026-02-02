@@ -5,6 +5,7 @@ import { Button } from "@/components/button"
 import { LoadingErrorState } from "../loading-error-state"
 import { ErrorState, ErrorStateDescription, ErrorStateTitle } from "@/components/error-state"
 import { Link } from "react-router-dom"
+import { Loader2 } from "lucide-react"
 
 export const ListingExplore = () => {
   const queryResult = useSearchImages({ limit: 20 })
@@ -29,7 +30,12 @@ export const ListingExplore = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 relative">
+        {(queryResult.isFetching) && (
+          <p className="absolute right-0 top-0 z-1 font-medium text-tonal-50 m-2">
+           <Loader2 className="animate-spin inline" /> Fetching...
+        </p>)}
         {images.map((image: TSearchImage, index: number) => (
           <Card key={image.id} image={image} index={index} />
         ))}
