@@ -1,7 +1,9 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query'
 import { getFavouritesQueryOptions } from '../api/favouritesQueryOptions'
 import type { TFavourite } from '../types/favourite'
+import { useUser } from '../context/UserContext'
 
 export function useFavourites(): UseQueryResult<TFavourite[], Error> {
-  return useQuery(getFavouritesQueryOptions())
+  const { userName } = useUser()
+  return useQuery(getFavouritesQueryOptions(userName))
 }

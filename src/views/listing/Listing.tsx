@@ -1,51 +1,39 @@
-import { useUserUploadedImages } from "@/hooks/useUserUploadedImages"
-import type { TImage } from "@/types/image"
-const API_USER = import.meta.env.VITE_CAT_API_USER ?? ''
-import { Card } from "./card/Card"
-import type { HTMLAttributes } from "react"
-import { Button } from "@/components/button/Button"
-// import { ErrorState } from "@/components/error-state/ErrorState"
+import { Heart, PawPrint, House, ArrowRight } from "lucide-react"
+import { Link } from "react-router-dom"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/tabs"
+import { ListingHome } from "./listing-home"
+import { ListingExplore } from "./listing-explore"
+import { ListingFavourites } from "./listing-favourites"
+import { ErrorState, ErrorStateTitle } from "@/components/error-state"
+import { Button } from "@/components/button"
 
-export const Listing = (props:  HTMLAttributes<HTMLDivElement>) => {
-    const queryResult = useUserUploadedImages({ limit: 20, sub_id: API_USER })
-    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = queryResult
-  
-    const allImages = data?.pages.flat() ?? []
-    const hasLoadedFirstPage = (data?.pages.length ?? 0) > 0
-  
-    if (isLoading) {
-      return <div>Loader/Spinner/Suspense here</div>
-    }
-  
-    if (error) {
-      return (
-    //   <ErrorState className="listing__error">
-    //     <ErrorState.Title>Error loading</ErrorState.Title>
-    //     <ErrorState.Description>{error.message}</ErrorState.Description>
-    //   </ErrorState>
-    <div>Error loading: {error.message}</div>)
-    }
-  
-    return (
-      <div className="listing" {...props}>
-        <div className="listing__grid">
-          {allImages.map((image: TImage) => (
-            <Card key={image.id} image={image} />
-          ))}
-        </div>
-        {hasLoadedFirstPage && hasNextPage && (
-          <div className="listing__load-more">
-            <Button
-              onClick={() => fetchNextPage()}
-              disabled={isFetchingNextPage}
-            >
-              {isFetchingNextPage ? 'Loading...' : 'Load More Cats 🐱'}
-            </Button>
-          </div>
-        )}
-        {/* {!hasNextPage && allImages.length > 0 && (
-          <div className="listing__end">No more cats to load</div>
-        )} */}
-      </div>
-    )
-  }
+export const Listing = () => {
+  return (
+    <div className="container mx-auto px-4 grow flex flex-col gap-4">
+      <p className="text-xs font-heading-cursive -mt-5">Cool cats. Cute cats. Cat cats.</p>
+      <Tabs defaultValue="uploaded">
+        <TabsList className="ml-auto">
+          <TabsTrigger value="uploaded"><House />Home</TabsTrigger>
+          <TabsTrigger value="search"><PawPrint />Explore</TabsTrigger>
+          <TabsTrigger value="favourites"><Heart />Favourites</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="uploaded" className="mt-4">
+          <ListingHome />
+        </TabsContent>
+
+        <TabsContent value="search" className="mt-4">
+          <ListingExplore />
+        </TabsContent>
+
+        <TabsContent value="favourites" className="mt-4">
+          <ListingFavourites />
+        </TabsContent>
+      </Tabs>
+      <ErrorState className="flex flex-col items-center gap-2 w-full bg-tonal-50 rounded-lg p-4 border border-tonal-100 mt-auto">
+        <ErrorStateTitle>Have a cat picture you want to share with the world?</ErrorStateTitle>
+        <Button asChild><Link to="/upload">Upload it <ArrowRight /></Link></Button>
+      </ErrorState>
+    </div>
+  )
+}

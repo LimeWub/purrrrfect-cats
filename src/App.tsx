@@ -24,7 +24,7 @@ function App() {
             <Link to="/"><Logo className="w-40" /></Link>
             <LoginPopover />
           </header>
-          <main className="flex-grow">
+          <main className="flex-grow flex flex-col">
       <Routes>
         <Route path="/" element={<Listing />} />
         <Route path="/upload" element={<Upload />} />
