@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 import { voteCat } from '@/api/voteMutations'
 import { VOTES_QUERY_KEY } from '@/api/votesQueryOptions'
 import type { TVote, TVotePayload } from '@/types/vote'
-import { useUser } from '@/context/UserContext'
+import { useUser } from '@/hooks/useUser'
 
 export function useVote(): UseMutationResult<Awaited<ReturnType<typeof voteCat>>, Error, TVotePayload> {
   const queryClient = useQueryClient()

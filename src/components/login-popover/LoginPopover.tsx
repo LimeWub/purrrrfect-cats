@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Button } from '@/components/button'
 import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from '@/components/popover'
-import { useUser } from '@/context/UserContext'
+import { useUser } from '@/hooks/useUser'
 
 export const LoginPopover = (props: React.ComponentProps<typeof Popover>) => {
     const { userName, setUserName } = useUser()

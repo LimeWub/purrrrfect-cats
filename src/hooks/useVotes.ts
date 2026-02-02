@@ -1,7 +1,7 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query'
 import { getVotesQueryOptions } from '@/api/votesQueryOptions'
 import type { TVote } from '@/types/vote'
-import { useUser } from '@/context/UserContext'
+import { useUser } from '@/hooks/useUser'
 
 export function useVotes(imageId?: string): UseQueryResult<TVote[], Error> {
   const baseOptions = getVotesQueryOptions()

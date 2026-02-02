@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query'
 import { uploadImage } from '@/api/imageMutations'
 import { IMAGES_QUERY_KEY } from '@/api/imagesQueryOptions'
-import { useUser } from '@/context/UserContext'
+import { useUser } from '@/hooks/useUser'
 
 export function useUploadImage(): UseMutationResult<Awaited<ReturnType<typeof uploadImage>>, Error, FormData> {
   const queryClient = useQueryClient()

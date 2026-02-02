@@ -1,26 +1,27 @@
-import { createContext, useContext, useState, type ReactNode } from 'react'
+import { createContext, useState, type ReactNode } from 'react'
 
 interface UserContextType {
   userName: string
   setUserName: (userName: string) => void
 }
 
-const UserContext = createContext<UserContextType | undefined>(undefined)
+export const UserContext = createContext<UserContextType | undefined>(undefined)
+
+const USER_NAME_STORAGE_KEY = 'userName'
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [userName, setUserName] = useState<string>('')
+  const [userName, setUserNameState] = useState<string>(() => {
+    return localStorage.getItem(USER_NAME_STORAGE_KEY) || ''
+  })
+
+  const setUserName = (userName: string) => {
+    setUserNameState(userName)
+    localStorage.setItem(USER_NAME_STORAGE_KEY, userName)
+  }
 
   return (
     <UserContext.Provider value={{ userName, setUserName }}>
       {children}
     </UserContext.Provider>
   )
-}
-
-export function useUser() {
-  const context = useContext(UserContext)
-  if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider')
-  }
-  return context
 }

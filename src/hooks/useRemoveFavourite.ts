@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 import { removeFavourite } from '@/api/favouriteMutations'
 import { FAVOURITES_QUERY_KEY } from '@/api/favouritesQueryOptions'
 import type { TFavourite, TRemoveFavouritePayload } from '@/types/favourite'
-import { useUser } from '@/context/UserContext'
+import { useUser } from '@/hooks/useUser'
 
 export function useRemoveFavourite(): UseMutationResult<Awaited<ReturnType<typeof removeFavourite>>, Error, TRemoveFavouritePayload> {
   const queryClient = useQueryClient()

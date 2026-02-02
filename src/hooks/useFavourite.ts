@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 import { addFavourite } from '@/api/favouriteMutations'
 import { FAVOURITES_QUERY_KEY } from '@/api/favouritesQueryOptions'
 import type { TFavourite, TFavouritePayload } from '@/types/favourite'
-import { useUser } from '@/context/UserContext'
+import { useUser } from '@/hooks/useUser'
 
 export function useFavourite(): UseMutationResult<Awaited<ReturnType<typeof addFavourite>>, Error, TFavouritePayload> {
   const queryClient = useQueryClient()
