@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { deleteImage } from '../api/imageMutations'
-import { IMAGES_QUERY_KEY } from '../api/imagesQueryOptions'
+import { deleteImage } from '@/api/imageMutations'
+import { IMAGES_QUERY_KEY } from '@/api/imagesQueryOptions'
 
 export type DeleteImageParams = { image_id: string }
 

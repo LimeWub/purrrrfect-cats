@@ -7,3 +7,11 @@ export type TFavourite = {
   created_at: string
   image: TSearchImage | TUploadedImage
 }
+
+export type TFavouritePayload = {
+  image_id: TFavourite['image_id']
+}
+
+export type TRemoveFavouritePayload = {
+  id: TFavourite['id']
+}

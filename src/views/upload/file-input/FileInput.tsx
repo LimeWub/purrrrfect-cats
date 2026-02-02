@@ -1,11 +1,10 @@
 import { useRef, useState } from 'react'
-import { useUploadImage } from '../../../hooks/useUploadImage'
+import { useUploadImage } from '@/hooks/useUploadImage'
 import { cn } from '@/utils/cn'
 import { Button } from '@/components/button'
 import { AlertCircle, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { Alert, AlertDescription, AlertTitle } from '@/components/alert'
-import { useUser } from '@/context/UserContext'
 
 const ACCEPT_TYPES = 'image/jpeg,image/jpg,image/png,image/gif'
 
@@ -25,7 +24,6 @@ interface FileInputProps extends React.ComponentProps<"div"> {
 }
 
 export const FileInput = ({ className, onSuccess, ...props }: FileInputProps) => {
-  const { userName } = useUser()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [validationError, setValidationError] = useState<string | null>(null)
@@ -54,9 +52,6 @@ export const FileInput = ({ className, onSuccess, ...props }: FileInputProps) =>
     const formData = new FormData()
     // Cat API requires the file to be appended with the key 'file' and the filename
     formData.append('file', selectedFile, selectedFile.name)
-    if (userName) {
-      formData.append('sub_id', userName)
-    }
 
     uploadMutation.mutate(formData, {
       onSuccess: () => {

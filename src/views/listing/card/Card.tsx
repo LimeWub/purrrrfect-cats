@@ -3,32 +3,31 @@ import { useDeleteVote } from '@/hooks/useDeleteVote'
 import { useFavourite } from '@/hooks/useFavourite'
 import { useRemoveFavourite } from '@/hooks/useRemoveFavourite'
 import type { TSearchImage, TUploadedImage } from '@/types/image'
-import { useVotes } from '@/hooks/useVotes'
+import { useVotes, useUserVotes } from '@/hooks/useVotes'
 import type { TVotePayload } from '@/types/vote'
 import { useFavourites } from '@/hooks/useFavourites'
-import { useUser } from '@/context/UserContext'
 import { Button } from '@/components/button'
 import { ButtonGroup, ButtonGroupText } from '@/components/button-group'
 import { ArrowUp, ArrowDown } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/tooltip'
 
 export const Card = ({ image }: { image: TSearchImage | TUploadedImage }) => {
-  const { userName } = useUser()
   const deleteVoteMutation = useDeleteVote()
-  const votesQuery = useVotes()
-  const votes = votesQuery.data?.filter(vote => vote.image_id === image.id)
-  const voteCount = votes?.reduce((acc, vote) => acc + vote.value, 0) ?? 0
-  const voteCastByUser = votes?.find(vote => vote.sub_id === userName)
+  const votesQuery = useVotes(image.id)
+  const voteCount = votesQuery.data?.reduce((acc, vote) => acc + vote.value, 0) ?? 0
+  const userVoteQuery = useUserVotes(image.id)
+  const voteCastByUser = userVoteQuery.data
   const isUpvoted = voteCastByUser?.value === 1
   const isDownvoted = voteCastByUser?.value === -1
   const voteMutation = useVote()
 
   const handleVote = (value: TVotePayload['value']) => {
-    const payload: TVotePayload = { image_id: image.id, value }
-    if (userName) {
-      payload.sub_id = userName
-    }
-    voteMutation.mutate(payload)
+    voteMutation.mutate({ image_id: image.id, value })
+  }
+
+  const handleDeleteVote = () => {
+    if (!voteCastByUser) return
+    deleteVoteMutation.mutate({ id: voteCastByUser.id })
   }
 
   const favouriteMutation = useFavourite()
@@ -39,9 +38,9 @@ export const Card = ({ image }: { image: TSearchImage | TUploadedImage }) => {
 
   const handleFavourite = () => {
     if (isFavourite) {
-      removeFavouriteMutation.mutate(favouriteId)
+      removeFavouriteMutation.mutate({ id: favouriteId })
     } else {
-      favouriteMutation.mutate(image.id)
+      favouriteMutation.mutate({ image_id: image.id })
     }
   }
 
@@ -57,7 +56,7 @@ export const Card = ({ image }: { image: TSearchImage | TUploadedImage }) => {
         <ButtonGroup orientation="horizontal" className="bg-white rounded-lg p-0.5">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant='ghost' className={isUpvoted ? 'bg-tonal-100' : ''} size="icon-sm" onClick={() => isUpvoted ? deleteVoteMutation.mutate(voteCastByUser?.id) : handleVote(1)} disabled={voteMutation.isPending}>
+              <Button variant='ghost' className={isUpvoted ? 'bg-tonal-100' : ''} size="icon-sm" onClick={() => isUpvoted ? handleDeleteVote() : handleVote(1)} disabled={voteMutation.isPending}>
                 <ArrowUp />
               </Button>
             </TooltipTrigger>
@@ -70,7 +69,7 @@ export const Card = ({ image }: { image: TSearchImage | TUploadedImage }) => {
           </ButtonGroupText>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant='ghost' className={isDownvoted ? 'bg-tonal-100' : ''} size="icon-sm" onClick={() => isDownvoted ? deleteVoteMutation.mutate(voteCastByUser?.id) : handleVote(-1)} disabled={voteMutation.isPending}>
+              <Button variant='ghost' className={isDownvoted ? 'bg-tonal-100' : ''} size="icon-sm" onClick={() => isDownvoted ? handleDeleteVote() : handleVote(-1)} disabled={voteMutation.isPending}>
                 <ArrowDown />
               </Button>
             </TooltipTrigger>

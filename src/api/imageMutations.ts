@@ -1,6 +1,9 @@
 import { fetchCatApi } from './apiClient'
 
-export function uploadImage(formData: FormData) {
+export function uploadImage(formData: FormData, sub_id?: string) {
+  if (sub_id) {
+    formData.append('sub_id', sub_id)
+  }
   return fetchCatApi<{ id: number }>('/images/upload', {
     method: 'POST',
     body: formData,

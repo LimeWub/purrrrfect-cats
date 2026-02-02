@@ -12,6 +12,9 @@ export type TVote = {
 
 export type TVotePayload = {
   image_id: TVote['image_id']
-  sub_id?: TVote['sub_id']
   value: TVote['value']
+}
+
+export type TDeleteVotePayload = {
+  id: TVote['id']
 }

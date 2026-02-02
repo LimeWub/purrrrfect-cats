@@ -1,15 +1,16 @@
 import { fetchCatApi } from './apiClient'
+import type { TFavouritePayload, TRemoveFavouritePayload } from '@/types/favourite'
 
-export function addFavourite(image_id: string, sub_id: string) {
+export function addFavourite(payload: TFavouritePayload, sub_id?: string) {
   return fetchCatApi<{ id: number }>('/favourites', {
     method: 'POST',
     body: JSON.stringify({
-      image_id, 
+      ...payload,
       ...(sub_id && { sub_id })
     }),
   })
 }
 
-export function removeFavourite(favourite_id: number) {
-  return fetchCatApi<void>(`/favourites/${favourite_id}`, { method: 'DELETE' })
+export function removeFavourite(payload: TRemoveFavouritePayload) {
+  return fetchCatApi<void>(`/favourites/${payload.id}`, { method: 'DELETE' })
 }

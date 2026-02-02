@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { addFavourite } from '../api/favouriteMutations'
-import { FAVOURITES_QUERY_KEY } from '../api/favouritesQueryOptions'
-import type { TFavourite } from '../types/favourite'
-import { useUser } from '../context/UserContext'
+import { addFavourite } from '@/api/favouriteMutations'
+import { FAVOURITES_QUERY_KEY } from '@/api/favouritesQueryOptions'
+import type { TFavourite, TFavouritePayload } from '@/types/favourite'
+import { useUser } from '@/context/UserContext'
 
-export function useFavourite(): UseMutationResult<Awaited<ReturnType<typeof addFavourite>>, Error, string> {
+export function useFavourite(): UseMutationResult<Awaited<ReturnType<typeof addFavourite>>, Error, TFavouritePayload> {
   const queryClient = useQueryClient()
   const { userName } = useUser()
   const queryKey = [...FAVOURITES_QUERY_KEY, userName] as const
   
   const mutation = useMutation({
-    mutationFn: (image_id: string) => addFavourite(image_id, userName),
-    onMutate: async (image_id) => {
+    mutationFn: (payload: TFavouritePayload) => addFavourite(payload, userName),
+    onMutate: async (payload) => {
       // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey })
 
@@ -24,17 +24,17 @@ export function useFavourite(): UseMutationResult<Awaited<ReturnType<typeof addF
         // Create a temporary favourite object (will be replaced by server response)
         const tempFavourite: TFavourite = {
           id: Date.now(), // Temporary ID
-          image_id,
+          image_id: payload.image_id,
           sub_id: userName,
           created_at: new Date().toISOString(),
-          image: { id: image_id, url: '', mime_type: 'image/jpeg' }, // Will be populated by server
+          image: { id: payload.image_id, url: '', mime_type: 'image/jpeg' }, // Will be populated by server
         }
         return [...old, tempFavourite]
       })
 
       return { previousFavourites }
     },
-    onError: (err, image_id, context) => {
+    onError: (err, payload, context) => {
       // Rollback on error
       if (context?.previousFavourites) {
         queryClient.setQueryData(queryKey, context.previousFavourites)
@@ -43,7 +43,7 @@ export function useFavourite(): UseMutationResult<Awaited<ReturnType<typeof addF
         action: {
           label: 'Retry',
           onClick: () => {
-            mutation.mutate(image_id)
+            mutation.mutate(payload)
           },
         },
       })

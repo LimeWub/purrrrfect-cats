@@ -1,14 +1,16 @@
 import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { voteCat } from '../api/voteMutations'
-import { VOTES_QUERY_KEY } from '../api/votesQueryOptions'
-import type { TVote, TVotePayload } from '../types/vote'
+import { voteCat } from '@/api/voteMutations'
+import { VOTES_QUERY_KEY } from '@/api/votesQueryOptions'
+import type { TVote, TVotePayload } from '@/types/vote'
+import { useUser } from '@/context/UserContext'
 
 export function useVote(): UseMutationResult<Awaited<ReturnType<typeof voteCat>>, Error, TVotePayload> {
   const queryClient = useQueryClient()
-  
+  const { userName } = useUser()
+
   const mutation = useMutation({
-    mutationFn: voteCat,
+    mutationFn: (payload: TVotePayload) => voteCat(payload, userName),
     onMutate: async (newVote) => {
       // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: VOTES_QUERY_KEY })
@@ -21,13 +23,15 @@ export function useVote(): UseMutationResult<Awaited<ReturnType<typeof voteCat>>
         const tempVote: TVote = {
           id: Date.now(), // Temporary ID
           image_id: newVote.image_id,
-          sub_id: newVote.sub_id,
+          sub_id: userName,
           value: newVote.value,
           created_at: new Date().toISOString(),
           image: { id: newVote.image_id, url: '' },
         }
         
-        if (newVote.sub_id) return [...old.filter(vote => vote.image_id !== newVote.image_id), tempVote]
+        if (userName) {
+          return [...old.filter(vote => !(vote.image_id === newVote.image_id && vote.sub_id === userName)), tempVote]
+        }
         return [...old, tempVote]
       })
 
