@@ -11,8 +11,8 @@ export const ErrorStateTitle = ({asChild, className, ...props}: HTMLAttributes<H
     return <Comp className={cn("text-lg font-medium text-tonal-800", className)} {...props} />
 }
 
-export const ErrorStateDescription = (props: HTMLAttributes<HTMLParagraphElement>) => {
-    return <p {...props} />
+export const ErrorStateDescription = ({className, ...props}: HTMLAttributes<HTMLParagraphElement>) => {
+    return <p className={cn("text-md text-muted-foreground", className)} {...props} />
 }
 
 export const ErrorState = ({ children, className, ...props }: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) => {
