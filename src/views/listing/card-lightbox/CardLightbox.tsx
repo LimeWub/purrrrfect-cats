@@ -53,9 +53,9 @@ function CardLightboxContent({
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-2 top-2 text-tonal-50"
+              className="absolute right-2 top-2 !text-tonal-50"
             >
-              <X className="size-8" />
+              <X className="size-6" />
               <span className="sr-only">Close lightbox</span>
             </Button>
           </DialogPrimitive.Close>
