@@ -38,8 +38,5 @@ export function getUserUploadedListingQueryOptions(params: Omit<TUserUploadedLis
     getNextPageParam: (lastPage: TUploadedImage[], allPages: TUploadedImage[][]) => {
       return lastPage.length >= (params.limit ?? DEFAULT_PAGE_LIMIT) ? allPages.length : undefined
     },
-    getPreviousPageParam: (_firstPage: TUploadedImage[], allPages: TUploadedImage[][]) => {
-      return allPages.length > 1 ? allPages.length - 2 : undefined // @TODO: Very much not convinced by this approach. -2 seems to be a magic number.
-    },
   }
 }

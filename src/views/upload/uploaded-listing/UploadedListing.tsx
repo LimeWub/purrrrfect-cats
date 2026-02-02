@@ -2,24 +2,22 @@ import { ErrorStateDescription, ErrorState, ErrorStateTitle } from '@/components
 import { useUserUploadedImages } from '@/hooks/useUserUploadedImages'
 import { UploadedListingItem } from './UploadedListingItem'
 import { Button } from '@/components/button'
-import { CatIcon, ChevronLeft, ChevronRight } from 'lucide-react'
+import { CatIcon } from 'lucide-react'
 import { useUser } from '@/hooks/useUser'
-import { ButtonGroup } from '@/components/button-group'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/tooltip'
 import { cn } from '@/utils/cn'
 
 export const UploadedListing = ({ className, ...props }: React.ComponentProps<'div'>) => {
     const { userName } = useUser()
     const queryResult = useUserUploadedImages({ limit: 20, sub_id: userName })
-    const { data, fetchNextPage, hasNextPage, fetchPreviousPage, hasPreviousPage, isFetchingNextPage, isFetchingPreviousPage } = queryResult
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error } = queryResult
 
     const allImages = data.pages.flat()
     
-    if (queryResult.error) {
+    if (error) {
         return (
             <ErrorState>
                 <ErrorStateTitle>Could not load your uploaded images</ErrorStateTitle>
-                <ErrorStateDescription>{queryResult.error?.message}</ErrorStateDescription>
+                <ErrorStateDescription>{error.message}</ErrorStateDescription>
             </ErrorState>
         )
     }
@@ -37,40 +35,15 @@ export const UploadedListing = ({ className, ...props }: React.ComponentProps<'d
     return (
         <div className={cn("flex flex-col gap-2 ", className)} {...props}>
             {allImages.map((image) => <UploadedListingItem key={image.id} image={image} />)}
-            <ButtonGroup orientation="horizontal" className="ml-auto">
-                {hasPreviousPage && (
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button
-                                variant="outline"
-                                onClick={() => fetchPreviousPage()}
-                                disabled={isFetchingPreviousPage}
-                            >
-                                <ChevronLeft />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            Previous Page
-                        </TooltipContent>
-                    </Tooltip>
-                )}
-                {hasNextPage && (
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button
-                                variant="outline"
-                                onClick={() => fetchNextPage()}
-                                disabled={isFetchingNextPage}
-                            >
-                                <ChevronRight />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            Next Page
-                        </TooltipContent>
-                    </Tooltip>
-                )}
-            </ButtonGroup>
+            {hasNextPage && (
+                <Button
+                    className="mx-auto block"
+                    onClick={() => fetchNextPage()}
+                    disabled={isFetchingNextPage}
+                >
+                    {isFetchingNextPage ? 'Loading...' : 'Load More'}
+                </Button>
+            )}
         </div>
     )
 }
