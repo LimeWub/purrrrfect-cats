@@ -1,67 +1,67 @@
-import type { PropsWithChildren } from 'react'
-import { ErrorStateDescription, ErrorState, ErrorStateTitle, ErrorStateImage } from '@/components/error-state'
+import { ErrorStateDescription, ErrorState, ErrorStateTitle } from '@/components/error-state'
 import { useUserUploadedImages } from '@/hooks/useUserUploadedImages'
 import { UploadedListingItem } from './UploadedListingItem'
 import { Button } from '@/components/button'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { CatIcon, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useUser } from '@/context/UserContext'
 import { ButtonGroup } from '@/components/button-group'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/tooltip'
+import { cn } from '@/utils/cn'
 
-export const UploadedListing = (props: PropsWithChildren) => {
+export const UploadedListing = ({ className, ...props }: React.ComponentProps<'div'>) => {
     const { userName } = useUser()
     const queryResult = useUserUploadedImages({ limit: 20, sub_id: userName })
     const { data, fetchNextPage, hasNextPage, fetchPreviousPage, hasPreviousPage, isFetchingNextPage, isFetchingPreviousPage, isLoading } = queryResult
 
     const allImages = data?.pages.flat() ?? []
 
+    if (allImages.length === 0) {
+        return (
+            <ErrorState>
+                <CatIcon className="w-24 h-24 stroke-1 stroke-tonal-700" />
+                <ErrorStateTitle>No images found</ErrorStateTitle>
+                <ErrorStateDescription>Your uploaded images will appear here.</ErrorStateDescription>
+            </ErrorState>
+        )
+    }
+
     return (
-        <div {...props}>
-            {allImages.length > 0 ? (
-                <div className="flex flex-col gap-2 ">
-                    {allImages.map((image) => <UploadedListingItem key={image.id} image={image} />)}
-                    <ButtonGroup orientation="horizontal" className="ml-auto">
-                        {hasPreviousPage && (
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button
-                                        variant="outline"
-                                        onClick={() => fetchPreviousPage()}
-                                        disabled={isFetchingPreviousPage || isLoading}
-                                    >
-                                        <ChevronLeft />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    Previous Page
-                                </TooltipContent>
-                            </Tooltip>
-                        )}
-                        {hasNextPage && (
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button
-                                        variant="outline"
-                                        onClick={() => fetchNextPage()}
-                                        disabled={isFetchingNextPage || isLoading}
-                                    >
-                                        <ChevronRight />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    Next Page
-                                </TooltipContent>
-                            </Tooltip>
-                        )}
-                    </ButtonGroup>
-                </div>
-            ) : (
-                <ErrorState>
-                    <ErrorStateImage src="/images/error-state.png" alt="Error State" />
-                    <ErrorStateTitle>No images found</ErrorStateTitle>
-                    <ErrorStateDescription>Your uploaded images will appear here.</ErrorStateDescription>
-                </ErrorState>
-            )}
+        <div className={cn("flex flex-col gap-2 ", className)} {...props}>
+            {allImages.map((image) => <UploadedListingItem key={image.id} image={image} />)}
+            <ButtonGroup orientation="horizontal" className="ml-auto">
+                {hasPreviousPage && (
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button
+                                variant="outline"
+                                onClick={() => fetchPreviousPage()}
+                                disabled={isFetchingPreviousPage || isLoading}
+                            >
+                                <ChevronLeft />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            Previous Page
+                        </TooltipContent>
+                    </Tooltip>
+                )}
+                {hasNextPage && (
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button
+                                variant="outline"
+                                onClick={() => fetchNextPage()}
+                                disabled={isFetchingNextPage || isLoading}
+                            >
+                                <ChevronRight />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            Next Page
+                        </TooltipContent>
+                    </Tooltip>
+                )}
+            </ButtonGroup>
         </div>
     )
 }
