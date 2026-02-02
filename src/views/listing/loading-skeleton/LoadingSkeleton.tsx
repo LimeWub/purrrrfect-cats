@@ -1,4 +1,4 @@
-import { CardSkeleton } from "../card/CardSkeleton"
+import { CardSkeleton } from "../card"
 import { cn } from "@/utils/cn"
 
 export const LoadingSkeleton = ({ className, ...props }: React.ComponentProps<'div'>) => {

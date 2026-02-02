@@ -1,6 +1,6 @@
 import { useFavourites } from "@/hooks/useFavourites"
 import type { TSearchImage, TUploadedImage } from "@/types/image"
-import { Card } from "../card/Card"
+import { Card } from "../card"
 import { ErrorState, ErrorStateTitle, ErrorStateDescription } from "@/components/error-state"
 import { LoadingErrorState } from "../loading-error-state"
 import { LoadingSkeleton } from "../loading-skeleton"

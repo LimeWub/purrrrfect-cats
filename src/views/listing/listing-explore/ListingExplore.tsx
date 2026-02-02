@@ -1,6 +1,6 @@
 import { useSearchImages } from "@/hooks/useSearchImages"
 import type { TSearchImage } from "@/types/image"
-import { Card } from "../card/Card"
+import { Card } from "../card"
 import { Button } from "@/components/button"
 import { LoadingErrorState } from "../loading-error-state"
 import { ErrorState, ErrorStateDescription, ErrorStateTitle } from "@/components/error-state"
