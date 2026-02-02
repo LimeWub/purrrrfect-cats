@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Listing } from './views/listing/Listing'
 import { Upload } from './views/upload/Upload'  
@@ -11,11 +11,23 @@ import { Logo } from './components/logo'
 import { LoginPopover } from './components/login-popover'
 import { ErrorState, ErrorStateTitle, ErrorStateDescription } from './components/error-state'
 import { Button } from './components/button'
+import { useLayoutEffect } from 'react'
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
     <UserProvider>
     <BrowserRouter>
+        <ScrollToTop />
       <TooltipProvider>
       <Toaster richColors position="top-right" />
           {/* <nav className="app-nav">
