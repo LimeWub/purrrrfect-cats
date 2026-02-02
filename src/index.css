@@ -85,6 +85,13 @@
 body {
   margin: 0;
   background-color: var(--color-primary-50);
+  color: var(--color-foreground);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
 }
 
 @layer base {
