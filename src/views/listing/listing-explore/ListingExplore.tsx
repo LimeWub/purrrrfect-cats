@@ -30,8 +30,8 @@ export const ListingExplore = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {images.map((image: TSearchImage) => (
-          <Card key={image.id} image={image} />
+        {images.map((image: TSearchImage, index: number) => (
+          <Card key={image.id} image={image} index={index} />
         ))}
       </div>
       {hasLoadedFirstPage && hasNextPage && (

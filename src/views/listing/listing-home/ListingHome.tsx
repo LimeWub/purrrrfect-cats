@@ -31,8 +31,8 @@ export const ListingHome = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {images.map((image: TUploadedImage) => (
-          <Card key={image.id} image={image} />
+        {images.map((image: TUploadedImage, index: number) => (
+          <Card key={image.id} image={image} index={index} />
         ))}
       </div>
       {hasLoadedFirstPage && hasNextPage && (

@@ -3,7 +3,7 @@ import { CardVoteControls } from '../card-vote-controls/CardVoteControls'
 import { CardFavouriteControls } from '../card-favourite-controls/CardFavouriteControls'
 import { CardLightbox, CardLightboxTrigger, CardLightboxContent } from '../card-lightbox'
 
-export const Card = ({ image }: { image: TSearchImage | TUploadedImage }) => {
+export const Card = ({ image, index }: { image: TSearchImage | TUploadedImage, index: number }) => {
 
   return (
     <div className="relative">
@@ -13,7 +13,8 @@ export const Card = ({ image }: { image: TSearchImage | TUploadedImage }) => {
             src={image.url}
             className="w-full h-full object-cover rounded-sm min-h-48 sm:aspect-square"
             alt='' // There is no helpful description for these cat images unfortunately
-            loading="lazy"
+            fetchPriority={index < 4 ? "high" : "auto"}
+            loading={index < 4 ? "eager" : "lazy"}
           />
         </CardLightboxTrigger>
         <CardLightboxContent image={image} />

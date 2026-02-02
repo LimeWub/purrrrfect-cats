@@ -11,6 +11,7 @@ export const Logo = (props: React.SVGProps<SVGSVGElement>) => {
             viewBox="0 0 500 150"
             preserveAspectRatio="xMidYMid meet"
             onMouseEnter={() => setAnimationKey(prev => prev + 1)}
+            aria-label="Picture Purrfect (Logo)"
             {...props}
         >
             <foreignObject x="0" y="0" width="500" height="150">

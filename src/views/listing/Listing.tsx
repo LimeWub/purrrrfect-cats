@@ -20,18 +20,21 @@ export const Listing = () => {
         </TabsList>
 
         <TabsContent value="uploaded" className="mt-4">
+          <h2 className="sr-only">Listing of locally uploaded cat pictures</h2>
           <Suspense fallback={<LoadingSkeleton />}>
             <ListingHome />
           </Suspense>
         </TabsContent>
 
         <TabsContent value="search" className="mt-4">
+          <h2 className="sr-only">Listing of cat pictures searched from the Cat API</h2>
           <Suspense fallback={<LoadingSkeleton />}>
             <ListingExplore />
           </Suspense>
         </TabsContent>
 
         <TabsContent value="favourites" className="mt-4">
+          <h2 className="sr-only">Listing of cat pictures favourited by the user</h2>
           <ListingFavourites />
         </TabsContent>
       </Tabs>

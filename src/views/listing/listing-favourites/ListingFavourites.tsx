@@ -39,8 +39,8 @@ export const ListingFavourites = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {images.map((image: TSearchImage | TUploadedImage) => (
-          <Card key={image.id} image={image} />
+        {images.map((image: TSearchImage | TUploadedImage, index: number) => (
+          <Card key={image.id} image={image} index={index} />
         ))}
       </div>
       {/* @TODO: Favourites pagination doesn't exist yet but could be good in future */}

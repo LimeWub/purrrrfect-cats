@@ -23,6 +23,7 @@ function CardLightboxTrigger({
     <DialogPrimitive.Trigger
       data-slot="card-lightbox-trigger"
       className={cn("cursor-pointer", className)}
+      aria-label="Open card lightbox"
       {...props}
     />
   )

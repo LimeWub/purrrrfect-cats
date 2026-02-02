@@ -31,7 +31,7 @@ export const CardVoteControls = ({ imageId }: { imageId: TSearchImage['id'] | TU
     <ButtonGroup orientation="horizontal" className="bg-white rounded-lg p-0.5">
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant='ghost' className={isUpvoted ? 'bg-tonal-100' : ''} size="icon-sm" onClick={() => isUpvoted ? handleDeleteVote() : handleVote(1)} disabled={voteMutation.isPending}>
+          <Button aria-label="Upvote" variant='ghost' className={isUpvoted ? 'bg-tonal-100' : ''} size="icon-sm" onClick={() => isUpvoted ? handleDeleteVote() : handleVote(1)} disabled={voteMutation.isPending}>
             <ArrowUp />
           </Button>
         </TooltipTrigger>
@@ -44,7 +44,7 @@ export const CardVoteControls = ({ imageId }: { imageId: TSearchImage['id'] | TU
       </ButtonGroupText>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant='ghost' className={isDownvoted ? 'bg-tonal-100' : ''} size="icon-sm" onClick={() => isDownvoted ? handleDeleteVote() : handleVote(-1)} disabled={voteMutation.isPending}>
+          <Button aria-label="Downvote" variant='ghost' className={isDownvoted ? 'bg-tonal-100' : ''} size="icon-sm" onClick={() => isDownvoted ? handleDeleteVote() : handleVote(-1)} disabled={voteMutation.isPending}>
             <ArrowDown />
           </Button>
         </TooltipTrigger>
