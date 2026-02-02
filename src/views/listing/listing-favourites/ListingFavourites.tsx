@@ -1,5 +1,5 @@
 import { useFavourites } from "@/hooks/useFavourites"
-import type { TImage, TUploadedImage } from "@/types/image"
+import type { TSearchImage, TUploadedImage } from "@/types/image"
 import { Card } from "../card/Card"
 import { ErrorState, ErrorStateTitle, ErrorStateDescription } from "@/components/error-state"
 import { LoadingErrorState } from "../loading-error-state"
@@ -29,7 +29,7 @@ export const ListingFavourites = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {favouritesImages.map((image: TImage | TUploadedImage) => (
+        {favouritesImages.map((image: TSearchImage | TUploadedImage) => (
           <Card key={image.id} image={image} />
         ))}
       </div>

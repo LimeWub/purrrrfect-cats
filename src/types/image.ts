@@ -1,4 +1,4 @@
-export type TImage = {
+export type TSearchImage = {
     id: string
     url: string
     width?: number

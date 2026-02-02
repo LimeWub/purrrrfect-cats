@@ -30,7 +30,7 @@ export const Listing = () => {
           <ListingFavourites />
         </TabsContent>
       </Tabs>
-      <ErrorState className="flex flex-col items-center gap-2 w-full bg-tonal-50 rounded-lg p-4 border border-tonal-100 mt-auto">
+      <ErrorState className="flex flex-col items-center gap-2 w-full bg-tonal-50 rounded-lg px-4 py-4 sm:py-8 border border-tonal-100 mt-auto">
         <ErrorStateTitle>Have a cat picture you want to share with the world?</ErrorStateTitle>
         <Button asChild><Link to="/upload">Upload it <ArrowRight /></Link></Button>
       </ErrorState>

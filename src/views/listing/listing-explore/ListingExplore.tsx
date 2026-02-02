@@ -1,5 +1,5 @@
 import { useSearchImages } from "@/hooks/useSearchImages"
-import type { TImage, TUploadedImage } from "@/types/image"
+import type { TSearchImage } from "@/types/image"
 import { Card } from "../card/Card"
 import { Button } from "@/components/button"
 import { LoadingErrorState } from "../loading-error-state"
@@ -34,7 +34,7 @@ export const ListingExplore = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {searchImages.map((image: TImage | TUploadedImage) => (
+        {searchImages.map((image: TSearchImage) => (
           <Card key={image.id} image={image} />
         ))}
       </div>

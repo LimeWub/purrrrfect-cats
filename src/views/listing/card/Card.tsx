@@ -2,7 +2,7 @@ import { useVote } from '@/hooks/useVote'
 import { useDeleteVote } from '@/hooks/useDeleteVote'
 import { useFavourite } from '@/hooks/useFavourite'
 import { useRemoveFavourite } from '@/hooks/useRemoveFavourite'
-import type { TImage, TUploadedImage } from '@/types/image'
+import type { TSearchImage, TUploadedImage } from '@/types/image'
 import { useVotes } from '@/hooks/useVotes'
 import type { TVotePayload } from '@/types/vote'
 import { useFavourites } from '@/hooks/useFavourites'
@@ -12,7 +12,7 @@ import { ButtonGroup, ButtonGroupText } from '@/components/button-group'
 import { ArrowUp, ArrowDown } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/tooltip'
 
-export const Card = ({ image }: { image: TImage | TUploadedImage }) => {
+export const Card = ({ image }: { image: TSearchImage | TUploadedImage }) => {
   const { userName } = useUser()
   const deleteVoteMutation = useDeleteVote()
   const votesQuery = useVotes()

@@ -1,4 +1,4 @@
-import type { TImage, TUploadedImage } from "../types/image"
+import type { TSearchImage, TUploadedImage } from "../types/image"
 import type { TSearchListingParams, TUserUploadedListingParams } from "../types/listing"
 import { fetchCatApi } from './apiClient'
 
@@ -17,10 +17,10 @@ export function getSearchListingQueryOptions(params: Omit<TSearchListingParams, 
     queryKey: [...IMAGES_QUERY_KEY, 'search', params] as const,
     queryFn: async ({ pageParam = 0 }: { pageParam: number }) => {
       const queryString = buildQueryString({ ...params, page: pageParam })
-      return fetchCatApi<TImage[]>(`/images/search?${queryString}`)
+      return fetchCatApi<TSearchImage[]>(`/images/search?${queryString}`)
     },
     initialPageParam: 0,
-    getNextPageParam: (lastPage: TImage[], allPages: TImage[][]) => {
+    getNextPageParam: (lastPage: TSearchImage[], allPages: TSearchImage[][]) => {
       return lastPage.length >= (params.limit ?? DEFAULT_PAGE_LIMIT) ? allPages.length : undefined
     },
   }
