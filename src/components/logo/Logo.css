@@ -1,0 +1,48 @@
+@keyframes letter-twist {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  30% {
+    transform: scale(.8) rotate(-10deg);
+  }
+  50% {
+    transform: scale(.2) rotate(0deg);
+  }
+  70% {
+    transform: scale(.6) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes wobble {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-4deg);
+  }
+  75% {
+    transform: rotate(4deg);
+  }
+}
+
+.animate-letter-twist {
+  animation: letter-twist 0.8s ease-in-out forwards;
+  animation-fill-mode: both;
+  transform-origin: center;
+  animation-delay: var(--twist-delay);
+}
+
+.animate-wobble {
+  animation: wobble 4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-letter-twist,
+  .animate-wobble {
+    animation: none;
+  }
+}
