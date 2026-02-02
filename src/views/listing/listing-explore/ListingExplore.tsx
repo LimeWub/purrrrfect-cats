@@ -5,24 +5,25 @@ import { Button } from "@/components/button"
 import { LoadingErrorState } from "../loading-error-state"
 import { ErrorState, ErrorStateDescription, ErrorStateTitle } from "@/components/error-state"
 import { Link } from "react-router-dom"
+import { LoadingSkeleton } from "../loading-skeleton"
 
 export const ListingExplore = () => {
-  const searchQueryResult = useSearchImages({ limit: 20 })
+  const queryResult = useSearchImages({ limit: 20 })
   
-  const searchImages = searchQueryResult.data?.pages.flat() ?? []
-  const searchHasNextPage = searchQueryResult.hasNextPage ?? false
-  const searchIsFetchingNextPage = searchQueryResult.isFetchingNextPage ?? false
-  const searchHasLoadedFirstPage = (searchQueryResult.data?.pages.length ?? 0) > 0
+  const images = queryResult.data?.pages.flat() ?? []
+  const hasNextPage = queryResult.hasNextPage ?? false
+  const isFetchingNextPage = queryResult.isFetchingNextPage ?? false
+  const hasLoadedFirstPage = (queryResult.data?.pages.length ?? 0) > 0
 
-  if (searchQueryResult.isLoading) {
-    return <div>Loader/Spinner/Suspense here</div>
+  if (queryResult.isLoading) {
+    return <LoadingSkeleton />
   }
 
-  if (searchQueryResult.error) {
-    return <LoadingErrorState errorMessage={searchQueryResult.error?.message} />
+  if (queryResult.error) {
+    return <LoadingErrorState errorMessage={queryResult.error?.message} />
   }
 
-  if (searchHasLoadedFirstPage && searchImages.length === 0) {
+  if (hasLoadedFirstPage && images.length === 0) {
     return (
         <ErrorState>
           <ErrorStateTitle>No images to explore yet!</ErrorStateTitle>
@@ -34,17 +35,17 @@ export const ListingExplore = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {searchImages.map((image: TSearchImage) => (
+        {images.map((image: TSearchImage) => (
           <Card key={image.id} image={image} />
         ))}
       </div>
-      {searchHasLoadedFirstPage && searchHasNextPage && (
+      {hasLoadedFirstPage && hasNextPage && (
         <Button
           className="mt-4 mx-auto block"
-          onClick={() => searchQueryResult.fetchNextPage()}
-          disabled={searchIsFetchingNextPage}
+          onClick={() => queryResult.fetchNextPage()}
+          disabled={isFetchingNextPage}
         >
-          {searchIsFetchingNextPage ? 'Loading...' : 'Load More'}
+          {isFetchingNextPage ? 'Loading...' : 'Load More'}
         </Button>
       )}
     </>

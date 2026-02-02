@@ -3,22 +3,22 @@ import type { TSearchImage, TUploadedImage } from "@/types/image"
 import { Card } from "../card/Card"
 import { ErrorState, ErrorStateTitle, ErrorStateDescription } from "@/components/error-state"
 import { LoadingErrorState } from "../loading-error-state"
+import { LoadingSkeleton } from "../loading-skeleton"
 
 export const ListingFavourites = () => {
-  const favouritesQueryResult = useFavourites()
+  const queryResult = useFavourites()
+  const images = queryResult.data?.map(favourite => favourite.image) ?? []
+  const hasLoadedFirstPage = (queryResult.data?.length ?? 0) > 0
 
-  const favouritesImages = favouritesQueryResult.data?.map(favourite => favourite.image) ?? []
-  const favouritesHasLoadedFirstPage = (favouritesQueryResult.data?.length ?? 0) > 0
-
-  if (favouritesQueryResult.isLoading) {
-    return <div>Loader/Spinner/Suspense here</div>
+  if (queryResult.isLoading) {
+    return <LoadingSkeleton />
   }
 
-  if (favouritesQueryResult.error) {
-    return <LoadingErrorState errorMessage={favouritesQueryResult.error?.message} />
+  if (queryResult.error) {
+    return <LoadingErrorState errorMessage={queryResult.error?.message} />
   }
 
-  if (favouritesHasLoadedFirstPage && favouritesImages.length === 0) {
+  if (hasLoadedFirstPage && images.length === 0) {
     return (
       <ErrorState>
         <ErrorStateTitle>No favourites yet!</ErrorStateTitle>
@@ -27,7 +27,7 @@ export const ListingFavourites = () => {
     )
   }
 
-  if (favouritesImages.length === 0) {
+  if (images.length === 0) {
     return (
       <ErrorState>
         <ErrorStateTitle>Could not load favourites!</ErrorStateTitle>
@@ -39,7 +39,7 @@ export const ListingFavourites = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {favouritesImages.map((image: TSearchImage | TUploadedImage) => (
+        {images.map((image: TSearchImage | TUploadedImage) => (
           <Card key={image.id} image={image} />
         ))}
       </div>

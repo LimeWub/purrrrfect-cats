@@ -5,25 +5,26 @@ import { Button } from "@/components/button"
 import { LoadingErrorState } from "../loading-error-state"
 import { ErrorState, ErrorStateDescription, ErrorStateTitle } from "@/components/error-state"
 import { Link } from "react-router-dom"
+import { LoadingSkeleton } from "../loading-skeleton"
 
 export const ListingHome = () => {
   // Omit sub_id from the query params ON PURPOSE to get all images uploaded using our API key
-  const uploadedQueryResult = useUserUploadedImages({ limit: 20 }) 
+  const queryResult = useUserUploadedImages({ limit: 20 }) 
   
-  const uploadedImages = uploadedQueryResult.data?.pages.flat() ?? []
-  const uploadedHasNextPage = uploadedQueryResult.hasNextPage ?? false
-  const uploadedIsFetchingNextPage = uploadedQueryResult.isFetchingNextPage ?? false
-  const uploadedHasLoadedFirstPage = (uploadedQueryResult.data?.pages.length ?? 0) > 0
+  const images = queryResult.data?.pages.flat() ?? []
+  const hasNextPage = queryResult.hasNextPage ?? false
+  const isFetchingNextPage = queryResult.isFetchingNextPage ?? false
+  const hasLoadedFirstPage = (queryResult.data?.pages.length ?? 0) > 0
 
-  if (uploadedQueryResult.isLoading) {
-    return <div>Loader/Spinner/Suspense here</div>
+  if (queryResult.isLoading) {
+    return <LoadingSkeleton />
   }
 
-  if (uploadedQueryResult.error) {
-    return <LoadingErrorState errorMessage={uploadedQueryResult.error?.message} />
+  if (queryResult.error) {
+    return <LoadingErrorState errorMessage={queryResult.error?.message} />
   }
 
-  if (uploadedHasLoadedFirstPage && uploadedImages.length === 0) {
+  if (hasLoadedFirstPage && images.length === 0) {
     return (
         <ErrorState>
           <ErrorStateTitle>No uploaded images yet!</ErrorStateTitle>
@@ -35,17 +36,17 @@ export const ListingHome = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {uploadedImages.map((image: TUploadedImage) => (
+        {images.map((image: TUploadedImage) => (
           <Card key={image.id} image={image} />
         ))}
       </div>
-      {uploadedHasLoadedFirstPage && uploadedHasNextPage && (
+      {hasLoadedFirstPage && hasNextPage && (
         <Button
           className="mt-4 mx-auto block"
-          onClick={() => uploadedQueryResult.fetchNextPage()}
-          disabled={uploadedIsFetchingNextPage}
+          onClick={() => queryResult.fetchNextPage()}
+          disabled={isFetchingNextPage}
         >
-          {uploadedIsFetchingNextPage ? 'Loading...' : 'Load More'}
+          {isFetchingNextPage ? 'Loading...' : 'Load More'}
         </Button>
       )}
     </>
