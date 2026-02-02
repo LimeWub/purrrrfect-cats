@@ -20,6 +20,15 @@ export const UploadedListing = ({ className, ...props }: React.ComponentProps<'d
         return <UploadedListingSkeleton />
     }
 
+    if (queryResult.error) {
+        return (
+            <ErrorState>
+                <ErrorStateTitle>Could not load your uploaded images</ErrorStateTitle>
+                <ErrorStateDescription>{queryResult.error?.message}</ErrorStateDescription>
+            </ErrorState>
+        )
+      }
+
     if (allImages.length === 0) {
         return (
             <ErrorState>
