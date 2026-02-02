@@ -7,6 +7,7 @@ import { useUser } from '@/hooks/useUser'
 import { ButtonGroup } from '@/components/button-group'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/tooltip'
 import { cn } from '@/utils/cn'
+import { UploadedListingSkeleton } from './UploadedListingSkeleton'
 
 export const UploadedListing = ({ className, ...props }: React.ComponentProps<'div'>) => {
     const { userName } = useUser()
@@ -14,6 +15,10 @@ export const UploadedListing = ({ className, ...props }: React.ComponentProps<'d
     const { data, fetchNextPage, hasNextPage, fetchPreviousPage, hasPreviousPage, isFetchingNextPage, isFetchingPreviousPage, isLoading } = queryResult
 
     const allImages = data?.pages.flat() ?? []
+    
+    if (isLoading) {
+        return <UploadedListingSkeleton />
+    }
 
     if (allImages.length === 0) {
         return (
