@@ -5,19 +5,14 @@ import { Button } from "@/components/button"
 import { LoadingErrorState } from "../loading-error-state"
 import { ErrorState, ErrorStateDescription, ErrorStateTitle } from "@/components/error-state"
 import { Link } from "react-router-dom"
-import { LoadingSkeleton } from "../loading-skeleton"
 
 export const ListingExplore = () => {
   const queryResult = useSearchImages({ limit: 20 })
   
-  const images = queryResult.data?.pages.flat() ?? []
-  const hasNextPage = queryResult.hasNextPage ?? false
-  const isFetchingNextPage = queryResult.isFetchingNextPage ?? false
-  const hasLoadedFirstPage = (queryResult.data?.pages.length ?? 0) > 0
-
-  if (queryResult.isLoading) {
-    return <LoadingSkeleton />
-  }
+  const images = queryResult.data.pages.flat()
+  const hasNextPage = queryResult.hasNextPage
+  const isFetchingNextPage = queryResult.isFetchingNextPage
+  const hasLoadedFirstPage = queryResult.data.pages.length > 0
 
   if (queryResult.error) {
     return <LoadingErrorState errorMessage={queryResult.error?.message} />

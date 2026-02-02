@@ -7,19 +7,14 @@ import { useUser } from '@/hooks/useUser'
 import { ButtonGroup } from '@/components/button-group'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/tooltip'
 import { cn } from '@/utils/cn'
-import { UploadedListingSkeleton } from './UploadedListingSkeleton'
 
 export const UploadedListing = ({ className, ...props }: React.ComponentProps<'div'>) => {
     const { userName } = useUser()
     const queryResult = useUserUploadedImages({ limit: 20, sub_id: userName })
-    const { data, fetchNextPage, hasNextPage, fetchPreviousPage, hasPreviousPage, isFetchingNextPage, isFetchingPreviousPage, isLoading } = queryResult
+    const { data, fetchNextPage, hasNextPage, fetchPreviousPage, hasPreviousPage, isFetchingNextPage, isFetchingPreviousPage } = queryResult
 
-    const allImages = data?.pages.flat() ?? []
+    const allImages = data.pages.flat()
     
-    if (isLoading) {
-        return <UploadedListingSkeleton />
-    }
-
     if (queryResult.error) {
         return (
             <ErrorState>
@@ -27,7 +22,7 @@ export const UploadedListing = ({ className, ...props }: React.ComponentProps<'d
                 <ErrorStateDescription>{queryResult.error?.message}</ErrorStateDescription>
             </ErrorState>
         )
-      }
+    }
 
     if (allImages.length === 0) {
         return (
@@ -49,7 +44,7 @@ export const UploadedListing = ({ className, ...props }: React.ComponentProps<'d
                             <Button
                                 variant="outline"
                                 onClick={() => fetchPreviousPage()}
-                                disabled={isFetchingPreviousPage || isLoading}
+                                disabled={isFetchingPreviousPage}
                             >
                                 <ChevronLeft />
                             </Button>
@@ -65,7 +60,7 @@ export const UploadedListing = ({ className, ...props }: React.ComponentProps<'d
                             <Button
                                 variant="outline"
                                 onClick={() => fetchNextPage()}
-                                disabled={isFetchingNextPage || isLoading}
+                                disabled={isFetchingNextPage}
                             >
                                 <ChevronRight />
                             </Button>

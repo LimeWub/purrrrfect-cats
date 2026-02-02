@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Heart, PawPrint, House, ArrowRight } from "lucide-react"
 import { Link } from "react-router-dom"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/tabs"
@@ -6,11 +7,11 @@ import { ListingExplore } from "./listing-explore"
 import { ListingFavourites } from "./listing-favourites"
 import { ErrorState, ErrorStateTitle } from "@/components/error-state"
 import { Button } from "@/components/button"
+import { LoadingSkeleton } from "./loading-skeleton"
 
 export const Listing = () => {
   return (
     <div className="container mx-auto px-4 grow flex flex-col gap-4">
-      <p className="text-xs font-heading-cursive -mt-5">Cool cats. Cute cats. Cat cats.</p>
       <Tabs defaultValue="uploaded">
         <TabsList className="ml-auto">
           <TabsTrigger value="uploaded"><House />Home</TabsTrigger>
@@ -19,11 +20,15 @@ export const Listing = () => {
         </TabsList>
 
         <TabsContent value="uploaded" className="mt-4">
-          <ListingHome />
+          <Suspense fallback={<LoadingSkeleton />}>
+            <ListingHome />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="search" className="mt-4">
-          <ListingExplore />
+          <Suspense fallback={<LoadingSkeleton />}>
+            <ListingExplore />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="favourites" className="mt-4">

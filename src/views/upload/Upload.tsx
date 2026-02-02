@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import type { PropsWithChildren } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FileInput } from './file-input'
@@ -5,6 +6,7 @@ import { UploadedListing } from './uploaded-listing/UploadedListing'
 import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/button'
 import { Link } from 'react-router-dom'
+import { UploadedListingSkeleton } from './uploaded-listing/UploadedListingSkeleton'
 
 export const Upload = (props: PropsWithChildren) => {
   const navigate = useNavigate()
@@ -18,7 +20,9 @@ export const Upload = (props: PropsWithChildren) => {
         </div>
         <div className="flex flex-col gap-4">
           <h2 className="text-2xl font-heading-cursive">Manage Uploads</h2>
-          <UploadedListing />
+          <Suspense fallback={<UploadedListingSkeleton />}>
+            <UploadedListing />
+          </Suspense>
         </div>
       </div>
     </div>
