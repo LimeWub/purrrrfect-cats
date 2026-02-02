@@ -40,7 +40,9 @@ function CardLightboxContent({
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="fixed inset-0 z-1 bg-black/80" />
+      <DialogPrimitive.Title className="sr-only">Card Lightbox</DialogPrimitive.Title>
       <DialogPrimitive.Content
+        aria-describedby={undefined}
         data-slot="card-lightbox-content"
         className={cn(
           "fixed left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-sm overflow-hidden w-max max-w-[95svw]",
