@@ -19,11 +19,11 @@ const validateFile = (file: File): string | null => {
   return null
 }
 
-interface FileInputProps extends React.ComponentProps<"div"> {
+type TFileInputProps = React.ComponentProps<"div"> & {
   onSuccess?: () => void
 }
 
-export const FileInput = ({ className, onSuccess, ...props }: FileInputProps) => {
+export const FileInput = ({ className, onSuccess, ...props }: TFileInputProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [validationError, setValidationError] = useState<string | null>(null)

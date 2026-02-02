@@ -1,11 +1,11 @@
 import { createContext, useState, type ReactNode } from 'react'
 
-interface UserContextType {
+type TUserContextType = {
   userName: string
   setUserName: (userName: string) => void
 }
 
-export const UserContext = createContext<UserContextType | undefined>(undefined)
+export const UserContext = createContext<TUserContextType | undefined>(undefined)
 
 const USER_NAME_STORAGE_KEY = 'userName'
 

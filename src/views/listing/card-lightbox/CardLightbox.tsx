@@ -28,7 +28,7 @@ function CardLightboxTrigger({
   )
 }
 
-interface CardLightboxContentProps extends React.ComponentProps<typeof DialogPrimitive.Content> {
+type TCardLightboxContentProps = React.ComponentProps<typeof DialogPrimitive.Content> & {
   image: TSearchImage | TUploadedImage
 }
 
@@ -36,7 +36,7 @@ function CardLightboxContent({
   className,
   image,
   ...props
-}: CardLightboxContentProps) {
+}: TCardLightboxContentProps) {
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="fixed inset-0 z-1 bg-black/80" />
