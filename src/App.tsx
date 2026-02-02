@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { Listing } from './views/listing/Listing'
 import { Upload } from './views/upload/Upload'  
+import { NotFound } from './views/not-found/NotFound'
 import './App.css'
 import { Toaster } from 'sonner'
 import { TooltipProvider } from './components/tooltip'
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Listing />} />
         <Route path="/upload" element={<Upload />} />
+              <Route path="*" element={<NotFound />} />
       </Routes>
           </main>
       </TooltipProvider>
