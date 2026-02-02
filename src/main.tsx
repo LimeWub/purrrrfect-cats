@@ -14,26 +14,12 @@ const storagePersister = createAsyncStoragePersister({
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes // @TODO ???
+      staleTime: 1000 * 60 * 5, // 5 minutes
       gcTime: 1000 * 60 * 60, // 1 hour
       refetchOnWindowFocus: false,
     },
   }, 
 })
-
-// @TODO: Do I even need this?
-// persistQueryClient({
-//   queryClient,
-//   persister: storagePersister,
-//   maxAge: 1000 * 60 * 60 * 24, // 1 day
-//   hydrateOptions: {
-//     defaultOptions: {
-//       queries: {
-//         gcTime: 1000 * 60 * 2, // 2 minutes
-//       },
-//     },
-//   },
-// })
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -43,7 +43,7 @@ export const ListingFavourites = () => {
           <Card key={image.id} image={image} index={index} />
         ))}
       </div>
-      {/* @TODO: Favourites pagination doesn't exist yet but could be good in future */}
+      {/* Favourites pagination doesn't exist yet but could be good in future */}
     </>
   )
 }

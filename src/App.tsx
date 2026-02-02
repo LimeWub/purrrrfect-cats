@@ -30,11 +30,6 @@ function App() {
         <ScrollToTop />
       <TooltipProvider>
       <Toaster richColors position="top-right" />
-          {/* <nav className="app-nav">
-        <Link to="/">Gallery</Link>
-        <Link to="/upload">Upload</Link>
-            </nav> */}
-          
           <header className="container mx-auto flex items-center justify-between gap-2 p-4">
             <Link to="/"><Logo className="w-40" /></Link>
             <LoginPopover />
