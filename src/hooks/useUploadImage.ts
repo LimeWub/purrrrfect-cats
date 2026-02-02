@@ -10,7 +10,7 @@ export function useUploadImage(): UseMutationResult<Awaited<ReturnType<typeof up
   return useMutation({
     mutationFn: (formData: FormData) => uploadImage(formData, userName),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: IMAGES_QUERY_KEY })
+      queryClient.invalidateQueries({ queryKey: [...IMAGES_QUERY_KEY, 'uploaded'] })
     },
   })
 }

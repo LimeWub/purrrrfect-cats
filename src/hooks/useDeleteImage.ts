@@ -11,7 +11,7 @@ export function useDeleteImage(): UseMutationResult<Awaited<ReturnType<typeof de
   const mutation = useMutation<Awaited<ReturnType<typeof deleteImage>>, Error, DeleteImageParams>({
     mutationFn: ({ image_id }) => deleteImage(image_id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: IMAGES_QUERY_KEY })
+      queryClient.invalidateQueries({ queryKey: [...IMAGES_QUERY_KEY, 'uploaded'] })
     },
     onError: (err, params) => {
       toast.error(`Failed to delete: ${err.message}`, {
