@@ -6,7 +6,7 @@ import { LoadingErrorState } from "../loading-error-state"
 
 export const ListingFavourites = () => {
   const favouritesQueryResult = useFavourites()
-  
+
   const favouritesImages = favouritesQueryResult.data?.map(favourite => favourite.image) ?? []
   const favouritesHasLoadedFirstPage = (favouritesQueryResult.data?.length ?? 0) > 0
 
@@ -17,14 +17,24 @@ export const ListingFavourites = () => {
   if (favouritesQueryResult.error) {
     return <LoadingErrorState errorMessage={favouritesQueryResult.error?.message} />
   }
-  
+
   if (favouritesHasLoadedFirstPage && favouritesImages.length === 0) {
     return (
-        <ErrorState className="flex flex-col items-center gap-2 w-full bg-tonal-50 rounded-lg p-4 border border-tonal-100 mt-4">
-          <ErrorStateTitle>No favourites yet!</ErrorStateTitle>
-          <ErrorStateDescription>Start favouriting cats to see them here.</ErrorStateDescription>
-        </ErrorState>
-      )}
+      <ErrorState>
+        <ErrorStateTitle>No favourites yet!</ErrorStateTitle>
+        <ErrorStateDescription>Start favouriting cats to see them here.</ErrorStateDescription>
+      </ErrorState>
+    )
+  }
+
+  if (favouritesImages.length === 0) {
+    return (
+      <ErrorState>
+        <ErrorStateTitle>Could not load favourites!</ErrorStateTitle>
+        <ErrorStateDescription>Make sure you are logged in and try again.</ErrorStateDescription>
+      </ErrorState>
+    )
+  }
 
   return (
     <>

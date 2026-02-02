@@ -11,7 +11,12 @@ export function useFavourite(): UseMutationResult<Awaited<ReturnType<typeof addF
   const queryKey = [...FAVOURITES_QUERY_KEY, userName] as const
   
   const mutation = useMutation({
-    mutationFn: (payload: TFavouritePayload) => addFavourite(payload, userName),
+    mutationFn: (payload: TFavouritePayload) => {
+      if (!userName) {
+        throw new Error('You must be logged in to favourite images')
+      }
+      return addFavourite(payload, userName)
+    },
     onMutate: async (payload) => {
       // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey })

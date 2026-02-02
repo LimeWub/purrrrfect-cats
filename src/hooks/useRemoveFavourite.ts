@@ -11,7 +11,12 @@ export function useRemoveFavourite(): UseMutationResult<Awaited<ReturnType<typeo
   const queryKey = [...FAVOURITES_QUERY_KEY, userName] as const
   
   const mutation = useMutation({
-    mutationFn: removeFavourite,
+    mutationFn: (payload: TRemoveFavouritePayload) => {
+      if (!userName) {
+        throw new Error('You must be logged in to remove favourites')
+      }
+      return removeFavourite(payload)
+    },
     onMutate: async (payload) => {
       // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey })

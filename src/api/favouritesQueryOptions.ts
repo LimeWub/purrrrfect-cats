@@ -10,5 +10,6 @@ export function getFavouritesQueryOptions(sub_id?: string) {
     queryKey: [...FAVOURITES_QUERY_KEY, sub_id] as const,
     queryFn: () => fetchCatApi<TFavourite[]>(`/favourites${queryParams}`),
     select: (data) => data.filter(favourite => favourite.image.url),
+    enabled: !!sub_id,
   })
 }
