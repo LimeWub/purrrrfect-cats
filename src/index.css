@@ -58,7 +58,7 @@
   --color-info-light: #e3f2fd;
   --color-info-dark: #1976d2;
 
-  /* Semantic color mappings for components */
+  /* Shadcn UI color mappings for components */
   --color-primary: var(--color-primary-600);
   --color-primary-foreground: #ffffff;
   --color-secondary: var(--color-tonal-200);
@@ -75,6 +75,21 @@
   --color-popover: #ffffff;
   --color-popover-foreground: var(--color-tonal-900);
   --color-input: var(--color-tonal-50);
+  --color-accent: var(--color-tonal-200);
+  --color-accent-foreground: var(--color-tonal-900);
+  --color-chart-1: var(--color-primary-500);
+  --color-chart-2: var(--color-primary-600);
+  --color-chart-3: var(--color-primary-700);
+  --color-chart-4: var(--color-success);
+  --color-chart-5: var(--color-info);
+  --color-sidebar: #ffffff;
+  --color-sidebar-foreground: var(--color-tonal-900);
+  --color-sidebar-primary: var(--color-primary-600);
+  --color-sidebar-primary-foreground: #ffffff;
+  --color-sidebar-accent: var(--color-tonal-200);
+  --color-sidebar-accent-foreground: var(--color-tonal-900);
+  --color-sidebar-border: var(--color-tonal-300);
+  --color-sidebar-ring: var(--color-primary-500);
 
   /* Font Families */
   --font-heading-cursive: 'Playwrite Australia Tasmania', cursive;
