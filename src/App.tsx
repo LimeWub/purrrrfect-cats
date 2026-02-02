@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { ErrorBoundary } from 'react-error-boundary'
 import { Listing } from './views/listing/Listing'
 import { Upload } from './views/upload/Upload'  
 import { NotFound } from './views/not-found/NotFound'
@@ -8,6 +9,8 @@ import { TooltipProvider } from './components/tooltip'
 import { UserProvider } from './context/UserContext'
 import { Logo } from './components/logo'
 import { LoginPopover } from './components/login-popover'
+import { ErrorState, ErrorStateTitle, ErrorStateDescription } from './components/error-state'
+import { Button } from './components/button'
 
 function App() {
   return (
@@ -24,6 +27,19 @@ function App() {
             <Link to="/"><Logo className="w-40" /></Link>
             <LoginPopover />
           </header>
+          <ErrorBoundary
+            fallback={
+              <ErrorState>
+                <ErrorStateTitle>Something went wrong</ErrorStateTitle>
+                <ErrorStateDescription>
+                  An unexpected error occurred. Please try reloading the page.
+                </ErrorStateDescription>
+                <Button onClick={() => window.location.reload()}>
+                  Reload Page
+                </Button>
+              </ErrorState>
+            }
+          >
           <main className="flex-grow flex flex-col">
       <Routes>
         <Route path="/" element={<Listing />} />
@@ -31,6 +47,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
       </Routes>
           </main>
+          </ErrorBoundary>
           <footer className="container mx-auto flex items-center justify-between gap-2 p-4 text-muted-foreground text-sm">
             <p>
               <svg aria-label="Waracle" className="inline-block size-5 fill-current" xmlns="http://www.w3.org/2000/svg" width="30" height="25" viewBox="0 0 40 25" fill="none">
