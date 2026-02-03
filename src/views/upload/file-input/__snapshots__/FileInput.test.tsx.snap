@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FileInput > renders 1`] = `
+<div>
+  <div
+    class="upload flex flex-col gap-2"
+  >
+    <div
+      class="bg-tonal-50 rounded-sm aspect-4/1 border border-dashed border-tonal-400 items-center justify-center flex py-6"
+    >
+      <input
+        accept="image/jpeg,image/jpg,image/png,image/gif"
+        style="display: none;"
+        type="file"
+      />
+      <div
+        class="upload-controls flex flex-col items-center gap-2"
+      >
+        <p
+          class="text-md text-tonal-800 font-medium"
+        >
+          Drag & Drop image or
+        </p>
+        <button
+          class="focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 rounded-lg border border-transparent bg-clip-padding text-sm font-medium focus-visible:ring-[3px] aria-invalid:ring-[3px] [&_svg:not([class*='size-'])]:size-4 inline-flex items-center justify-center whitespace-nowrap transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none group/button select-none bg-primary text-primary-foreground [a]:hover:bg-primary/80 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2"
+          data-size="default"
+          data-slot="button"
+          data-variant="default"
+        >
+           browse from your device
+        </button>
+        <p
+          class="text-sm text-muted-foreground"
+        >
+          Supported formats: JPG, PNG, GIF
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
