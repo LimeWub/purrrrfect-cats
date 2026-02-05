@@ -88,10 +88,10 @@ describe('FileInput', () => {
         await waitFor(() => expect(screen.queryByText('cat.jpg')).not.toBeInTheDocument())
     })
 
-    it('calls upload mutation when upload is clicked', async () => {
+    it('calls upload mutation and onSuccess callback when upload is clicked', async () => {
         const user = userEvent.setup()
         const onSuccess = vi.fn()
-        const mockMutate = vi.fn((_, opts) => opts?.onSuccess?.()) // I 100% understand why I need to do this.
+        const mockMutate = vi.fn((_, opts) => opts?.onSuccess?.()) // I don't 100% understand why I need to do this.
         mockUseUploadImage.mockReturnValue({ mutate: mockMutate, isPending: false, isError: false, error: null } as unknown as MockUploadResult)
         render(<FileInput onSuccess={onSuccess} />, { wrapper: TestWrapper })
         const file = createMockFile('cat.jpg', 'image/jpeg')
