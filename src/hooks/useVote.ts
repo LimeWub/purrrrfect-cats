@@ -1,11 +1,11 @@
-import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { voteCat } from '@/api/voteMutations'
 import { VOTES_QUERY_KEY } from '@/api/votesQueryOptions'
 import type { TVote, TVotePayload } from '@/types/vote'
 import { useUser } from '@/hooks/useUser'
 
-export function useVote(): UseMutationResult<Awaited<ReturnType<typeof voteCat>>, Error, TVotePayload> {
+export function useVote() {
   const queryClient = useQueryClient()
   const { userName } = useUser()
 

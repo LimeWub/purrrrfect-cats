@@ -1,9 +1,9 @@
-import { useQuery, type UseQueryResult } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { getVotesQueryOptions } from '@/api/votesQueryOptions'
 import type { TVote } from '@/types/vote'
 import { useUser } from '@/hooks/useUser'
 
-export function useVotes(imageId?: string): UseQueryResult<TVote[], Error> {
+export function useVotes(imageId?: string) {
   const baseOptions = getVotesQueryOptions()
   
   return useQuery({
@@ -16,7 +16,7 @@ export function useVotes(imageId?: string): UseQueryResult<TVote[], Error> {
 
 export function useUserVotes(
   imageId: string
-): UseQueryResult<TVote | undefined, Error> {
+) {
   const baseOptions = getVotesQueryOptions()
   const { userName } = useUser()
   

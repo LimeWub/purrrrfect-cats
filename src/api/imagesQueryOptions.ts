@@ -12,7 +12,7 @@ function buildQueryString(params: Record<string, unknown>): string {
     .join('&')
 }
 
-export function getSearchListingQueryOptions(params: Omit<TSearchListingParams, 'page'>) {
+export function getSearchListingQueryOptions(params: TSearchListingParams) {
   return {
     queryKey: [...IMAGES_QUERY_KEY, 'search', params] as const,
     queryFn: async ({ pageParam = 0 }: { pageParam: number }) => {
@@ -27,7 +27,7 @@ export function getSearchListingQueryOptions(params: Omit<TSearchListingParams, 
 }
 
 
-export function getUserUploadedListingQueryOptions(params: Omit<TUserUploadedListingParams, 'page'>) {
+export function getUserUploadedListingQueryOptions(params: TUserUploadedListingParams) {
   return {
     queryKey: [...IMAGES_QUERY_KEY, 'uploaded', params] as const,
     queryFn: async ({ pageParam = 0 }: { pageParam: number }) => {
