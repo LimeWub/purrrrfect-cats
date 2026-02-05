@@ -6,18 +6,18 @@ import { LoadingErrorState } from "../loading-error-state"
 import { LoadingSkeleton } from "../loading-skeleton"
 
 export const ListingFavourites = () => {
-  const queryResult = useFavourites()
-  const images = queryResult.data?.map(favourite => favourite.image) ?? []
+  const { isLoading, error, isSuccess, data } = useFavourites()
+  const images = data?.map(favourite => favourite.image) ?? []
 
-  if (queryResult.isLoading) {
+  if (isLoading) { // Favourites does not use Suspense so we handle this here
     return <LoadingSkeleton />
   }
 
-  if (queryResult.error) {
-    return <LoadingErrorState errorMessage={queryResult.error?.message} />
+  if (error) {
+    return <LoadingErrorState errorMessage={error.message} />
   }
 
-  if (queryResult.isSuccess && images.length === 0) {
+  if (isSuccess && images.length === 0) {
     return (
       <ErrorState>
         <ErrorStateTitle>No favourites yet!</ErrorStateTitle>

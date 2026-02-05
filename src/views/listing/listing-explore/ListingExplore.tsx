@@ -8,18 +8,15 @@ import { Link } from "react-router-dom"
 import { Loader2 } from "lucide-react"
 
 export const ListingExplore = () => {
-  const queryResult = useSearchImages({ limit: 20 })
+  const { hasNextPage, isFetchingNextPage, isSuccess, data, error, fetchNextPage, isFetching } = useSearchImages({ limit: 20 })
   
-  const images = queryResult.data.pages.flat()
-  const hasNextPage = queryResult.hasNextPage
-  const isFetchingNextPage = queryResult.isFetchingNextPage
-  const hasLoadedFirstPage = queryResult.data.pages.length > 0
+  const images = data.pages.flat()
 
-  if (queryResult.error) {
-    return <LoadingErrorState errorMessage={queryResult.error?.message} />
+  if (error) {
+    return <LoadingErrorState errorMessage={error?.message} />
   }
 
-  if (hasLoadedFirstPage && images.length === 0) {
+  if (isSuccess && images.length === 0) {
     return (
         <ErrorState>
           <ErrorStateTitle>No images to explore yet!</ErrorStateTitle>
@@ -30,9 +27,8 @@ export const ListingExplore = () => {
 
   return (
     <>
-    
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 relative">
-        {(queryResult.isFetching) && (
+        {(isFetching) && (
           <p className="absolute right-0 top-0 z-1 font-medium text-tonal-50 m-2">
            <Loader2 className="animate-spin inline" /> Fetching...
         </p>)}
@@ -40,10 +36,10 @@ export const ListingExplore = () => {
           <Card key={image.id} image={image} index={index} />
         ))}
       </div>
-      {hasLoadedFirstPage && hasNextPage && (
+      {hasNextPage && (
         <Button
           className="mt-4 mx-auto block"
-          onClick={() => queryResult.fetchNextPage()}
+          onClick={() => fetchNextPage()}
           disabled={isFetchingNextPage}
         >
           {isFetchingNextPage ? 'Loading...' : 'Load More'}
