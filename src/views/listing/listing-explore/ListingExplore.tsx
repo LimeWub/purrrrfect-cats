@@ -28,7 +28,7 @@ export const ListingExplore = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 relative">
-        {(isFetching) && (
+        {isFetching && (
           <p className="absolute right-0 top-0 z-1 font-medium text-tonal-50 m-2">
            <Loader2 className="animate-spin inline" /> Fetching...
         </p>)}
