@@ -37,9 +37,6 @@ export const FileInput = ({ className, onSuccess, ...props }: TFileInputProps) =
     const error = validateFile(file)
     if (error) {
       setValidationError(error)
-      // @TODO: Keep previous file in the input so we don't lose it.
-      setSelectedFile(null)
-      e.target.value = ''
     } else {
       setValidationError(null)
       setSelectedFile(file)
