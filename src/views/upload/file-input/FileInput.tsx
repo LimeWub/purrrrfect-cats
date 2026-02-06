@@ -77,7 +77,7 @@ export const FileInput = ({ className, onSuccess, ...props }: TFileInputProps) =
       const dataTransfer = new DataTransfer()
       dataTransfer.items.add(file)
       fileInputRef.current.files = dataTransfer.files
-      handleFileChange({ target: fileInputRef.current } as React.ChangeEvent<HTMLInputElement>)
+      fileInputRef.current.dispatchEvent(new Event('change', { bubbles: true }))
     }
     setIsDragOver(false)
   }
