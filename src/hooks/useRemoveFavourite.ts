@@ -1,11 +1,11 @@
-import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { removeFavourite } from '@/api/favouriteMutations'
 import { FAVOURITES_QUERY_KEY } from '@/api/favouritesQueryOptions'
 import type { TFavourite, TRemoveFavouritePayload } from '@/types/favourite'
 import { useUser } from '@/hooks/useUser'
 
-export function useRemoveFavourite(): UseMutationResult<Awaited<ReturnType<typeof removeFavourite>>, Error, TRemoveFavouritePayload> {
+export function useRemoveFavourite() {
   const queryClient = useQueryClient()
   const { userName } = useUser()
   const queryKey = [...FAVOURITES_QUERY_KEY, userName] as const

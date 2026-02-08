@@ -1,11 +1,11 @@
-import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { deleteImage } from '@/api/imageMutations'
 import { IMAGES_QUERY_KEY } from '@/api/imagesQueryOptions'
 
 export type DeleteImageParams = { image_id: string }
 
-export function useDeleteImage(): UseMutationResult<Awaited<ReturnType<typeof deleteImage>>, Error, DeleteImageParams> {
+export function useDeleteImage() {
   const queryClient = useQueryClient()
   
   const mutation = useMutation<Awaited<ReturnType<typeof deleteImage>>, Error, DeleteImageParams>({

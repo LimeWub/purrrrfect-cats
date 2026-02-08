@@ -37,9 +37,6 @@ export const FileInput = ({ className, onSuccess, ...props }: TFileInputProps) =
     const error = validateFile(file)
     if (error) {
       setValidationError(error)
-      // @TODO: Keep previous file in the input so we don't lose it.
-      setSelectedFile(null)
-      e.target.value = ''
     } else {
       setValidationError(null)
       setSelectedFile(file)
@@ -77,7 +74,7 @@ export const FileInput = ({ className, onSuccess, ...props }: TFileInputProps) =
       const dataTransfer = new DataTransfer()
       dataTransfer.items.add(file)
       fileInputRef.current.files = dataTransfer.files
-      handleFileChange({ target: fileInputRef.current } as React.ChangeEvent<HTMLInputElement>)
+      fileInputRef.current.dispatchEvent(new Event('change', { bubbles: true }))
     }
     setIsDragOver(false)
   }
